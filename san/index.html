@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto 2ndo Parcial</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    
+    <header class="shadow">
+        <div class="container-logo">
+            <img src="logo.png" alt="Un logo de la pagina"> 
+        </div>
+        <div>
+           <button id = "Dark-Mode"> Dark-Mode</button>
+            
+        </div>
+    </header>
+
+    <section class="container-title">
+        <h1> The Rick And Morty</h1>
+    </section>
+
+    <section class="personaje" id="container-personajes">
+        
+    </section>
+
+    <button id="load-more">Cargar mas personajes</button>
+
+    
+    
+</body>
+
+
+
+
+<script>
+
+
+
+    function renderLoader(){ 
+        const container=document.getElementById('container-personajes')
+        const loader=document.createElement('div')
+        loader.setAttribute('id','loader')
+        loader.innerHTML='cargando...'
+        container.appendChild(loader)
+
+
+
+    } 
+
+    function removeLoader(){
+        const loader=document.getElementById('loader')
+        if(loader){
+            loader.remove()
+
+
+
+
+        }
+
+
+
+     } 
+
+
+
+
+    async function get_personajes(){
+        const url='https://rickandmortyapi.com/api/character';
+        renderLoader()
+        const response=await fetch(url)
+        const data= await response.json()
+        const container= document.getElementById("container-personajes")
+        const personajes= data.results
+        personajes.forEach(element => {
+            console.log(element);
+            const container_personaje = document.createElement("div")
+            container_personaje.classList.add("personaje")
+            const img = document.createElement("img")
+            img.src = element.image
+            container_personaje.appendChild(img)
+            container.appendChild(container_personaje)   
+        });
+        removeLoader()
+
+
+    } 
+    
+
+    get_personajes();
+    const btn = document.getElementById("load-more")
+    function loadMore(){
+        console.log("cargara mas personajes");
+    }
+    btn.addEventListener("click", loadMore)
+    
+    const btnDarkMode = document.getElementById("Dark-Mode")
+    function toggleDarkMode(){
+        document.body.classList.toggle("Dark-Mode");
+        if (document.body.classList.contains("Dark-Mode")){
+            btnDarkMode.textContent= "White Mode";
+        } else {
+            btnDarkMode.textContent =" Dark-Mode"
+        }
+        
+    }
+    btnDarkMode.addEventListener("click",toggleDarkMode)
+
+
+</script>
+
+<section id="container-personajes">
+
+</section>
+
+</html>
+
